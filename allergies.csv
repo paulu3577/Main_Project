@@ -1,0 +1,101 @@
+Patient_ID,Patient Name,Allergies
+P001,James Wilson,"Penicillin, Peanuts"
+P002,Mary Johnson,Latex
+P003,Robert Smith,"Shellfish, Sulfa Drugs"
+P004,Patricia Brown,No Known Allergies
+P005,John Davis,"Bee Stings, Aspirin"
+P006,Jennifer Garcia,"Dairy, Eggs"
+P007,Michael Miller,Codeine
+P008,Linda Martinez,"Tree Nuts, Soy"
+P009,William Anderson,Iodine
+P010,Elizabeth Thomas,"Wheat, Fish"
+P011,David Rodriguez,No Known Allergies
+P012,Margaret Wilson,"Penicillin, Dust Mites"
+P013,Joseph Lee,"Mold, Cat Dander"
+P014,Susan Thompson,Tetracycline
+P015,Charles White,"Pollen, Dog Dander"
+P016,Jessica Moore,No Known Allergies
+P017,Christopher Taylor,"Sulfa Drugs, Latex"
+P018,Sarah Jackson,"Sesame, Eggs"
+P019,Daniel Martin,Morphine
+P020,Nancy Garcia,"Grass, Tree Pollen"
+P021,Kevin Brown,"Shellfish, Ibuprofen"
+P022,Lisa Davis,No Known Allergies
+P023,Steven Anderson,"Peanuts, Tree Nuts"
+P024,Michelle Thompson,"Dust, Mold"
+P025,Thomas Martinez,Amoxicillin
+P026,Barbara Wilson,"Wheat, Soy"
+P027,Mark Johnson,No Known Allergies
+P028,Sandra Rodriguez,"Bee Stings, Wasp Stings"
+P029,George Taylor,"Fish, Shellfish"
+P030,Betty White,Penicillin
+P031,Richard Moore,"Ragweed, Pollen"
+P032,Carol Martin,No Known Allergies
+P033,Edward Lee,"Eggs, Milk"
+P034,Helen Garcia,Aspirin
+P035,Donald Smith,"Latex, Bandage Adhesive"
+P036,Ruth Johnson,No Known Allergies
+P037,Kenneth Brown,"Cat Dander, Dog Dander"
+P038,Sharon Davis,"Peanuts, Sesame"
+P039,Paul Wilson,Codeine
+P040,Deborah Anderson,"Sulfa Drugs, Penicillin"
+P041,Ronald Taylor,No Known Allergies
+P042,Michelle Thompson,"Wool, Dust"
+P043,Jason Martinez,"Soy, Tree Nuts"
+P044,Diane Rodriguez,Iodine
+P045,Gary Moore,"Bee Stings, Pollen"
+P046,Janet Wilson,No Known Allergies
+P047,Stephen Davis,"Fish, Shellfish"
+P048,Rachel Brown,"Latex, Nickel"
+P049,Dennis Johnson,Amoxicillin
+P050,Rebecca Martin,"Wheat, Gluten"
+P051,Jeffrey Garcia,No Known Allergies
+P052,Catherine Lee,"Peanuts, Fish"
+P053,Larry Anderson,"Mold, Dust Mites"
+P054,Maria Thompson,Tetracycline
+P055,Frank Wilson,"Cat Hair, Pollen"
+P056,Virginia Davis,No Known Allergies
+P057,Scott Taylor,"Penicillin, Morphine"
+P058,Julia Rodriguez,"Eggs, Dairy"
+P059,Eric Moore,Ibuprofen
+P060,Teresa Martin,"Tree Pollen, Grass"
+P061,Peter Brown,No Known Allergies
+P062,Joyce Garcia,"Shellfish, Iodine"
+P063,Dennis Wilson,"Peanuts, Soy"
+P064,Gloria Thompson,Sulfa Drugs
+P065,Douglas Davis,"Dust, Pet Dander"
+P066,Evelyn Rodriguez,No Known Allergies
+P067,Henry Taylor,"Latex, Penicillin"
+P068,Judith Anderson,"Tree Nuts, Sesame"
+P069,Carl Johnson,Aspirin
+P070,Mildred Martin,"Ragweed, Mold"
+P071,Arthur Moore,No Known Allergies
+P072,Katherine Wilson,"Fish, Eggs"
+P073,Roger Brown,"Bee Venom, Wasp Venom"
+P074,Joan Davis,Codeine
+P075,Lawrence Garcia,"Wheat, Dairy"
+P076,Beverly Thompson,No Known Allergies
+P077,Joe Anderson,"Pollen, Dust"
+P078,Cheryl Taylor,"Penicillin, Tetracycline"
+P079,Russell Wilson,Latex
+P080,Alice Moore,"Peanuts, Tree Nuts"
+P081,Philip Martin,No Known Allergies
+P082,Marie Brown,"Shellfish, Fish"
+P083,Harry Davis,"Cat Dander, Dust Mites"
+P084,Lois Garcia,Morphine
+P085,Fred Thompson,"Soy, Eggs"
+P086,Phyllis Wilson,No Known Allergies
+P087,Howard Anderson,"Sulfa Drugs, Iodine"
+P088,Janice Taylor,"Wheat, Gluten"
+P089,Justin Moore,Amoxicillin
+P090,Jean Martin,"Pollen, Grass"
+P091,Bruce Brown,No Known Allergies
+P092,Ruby Davis,"Bee Stings, Latex"
+P093,Wayne Garcia,"Peanuts, Fish"
+P094,Lori Thompson,Penicillin
+P095,Ralph Wilson,"Mold, Dust"
+P096,Tina Anderson,No Known Allergies
+P097,Carlos Taylor,"Tree Nuts, Sesame"
+P098,Norma Moore,"Dog Dander, Cat Dander"
+P099,Victor Martin,Aspirin
+P100,Paula Brown,"Dairy, Eggs"

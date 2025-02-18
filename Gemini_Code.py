@@ -4,7 +4,7 @@ import json
 import pandas as pd
 
 # Configure the API key
-genai.configure(api_key="AIzaSyBMFMAJp1UNf5PHJ0Z4-HBJIpFS0YsIYxM")
+genai.configure(api_key="..............................")
 
 # def get_patient_info(patient_id):
 #   df = pd.read_csv("patient_info.csv",dtype={"Patient_ID": str})

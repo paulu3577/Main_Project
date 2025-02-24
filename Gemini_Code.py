@@ -1,28 +1,46 @@
 
+
 import google.generativeai as genai
 import json
 import pandas as pd
+import requests
+import streamlit as st
+from langgraph.graph import Graph
+from LLM_MySQL import *
+
 
 # Configure the API key
-genai.configure(api_key="..............................")
+genai.configure(api_key="AIzaSyBMFMAJp1UNf5PHJ0Z4-HBJIpFS0YsIYxM")
 
-# def get_patient_info(patient_id):
-#   df = pd.read_csv("patient_info.csv",dtype={"Patient_ID": str})
-#   print(df)
-#   if patient_id in df["Patient_ID"].values:
-#     name = df.loc[df["Patient_ID"] == patient_id, "Patient Name"].values[0]
-#     return json.dumps({"Patient name":name})
-#   else:
-#     return json.dumps({"Patient name":"unknown"})
+agent_graph = Graph()
+memory = {}
+
+def store_memory(user_prompt: str, response: str):
+    """Stores user query and response in memory."""
+    memory[user_prompt] = response
+    return response
+
+def retrieve_memory(user_prompt: str):
+    """Retrieves previous conversation if available."""
+    return memory.get(user_prompt, None)
+
+def get_patient_info(patient_id):
+    df = pd.read_csv("patient_info.csv",dtype={"Patient_ID": str})
+    print(df)
+    if patient_id in df["Patient_ID"].values:
+      name = df.loc[df["Patient_ID"] == patient_id, "Patient Name"].values[0]
+      return json.dumps({"Patient name":name})
+    else:
+      return json.dumps({"Patient name":"unknown"})
   
 def get_current_medications(patient_id):
-  df = pd.read_csv("medications.csv",dtype={"Patient_ID": str})
-  print(df)
-  if patient_id in df["Patient_ID"].values:
-    Medication = df.loc[df["Patient_ID"] == patient_id, "Medications"].values[0]
-    return json.dumps({"Current Medication":Medication})
-  else:
-    return json.dumps({"Current Medication":"unknown"})
+    df = pd.read_csv("medications.csv",dtype={"Patient_ID": str})
+    print(df)
+    if patient_id in df["Patient_ID"].values:
+      Medication = df.loc[df["Patient_ID"] == patient_id, "Medications"].values[0]
+      return json.dumps({"Current Medication":Medication})
+    else:
+      return json.dumps({"Current Medication":"unknown"})
 
 def get_allergies(patient_id):
     df = pd.read_csv("allergies.csv")
@@ -43,39 +61,40 @@ def get_complications(patient_id):
      return json.dumps({"Complications":"unknown"})
     
 def get_current_stock(name):
-  df = pd.read_csv("Medicine_list.csv")
-  print(df)
-  if name.lower() in df["Name"].str.lower().values:
-    quantity = int(df.loc[df["Name"].str.lower() == name.lower(), "Quantity"].values[0])
-    return json.dumps({"quantity":quantity})
-  else:
-    return json.dumps({"quantity":"unknown"})
+    df = pd.read_csv("Medicine_list.csv")
+    print(df)
+    if name.lower() in df["Name"].str.lower().values:
+      quantity = int(df.loc[df["Name"].str.lower() == name.lower(), "Quantity"].values[0])
+      return json.dumps({"quantity":quantity})
+    else:
+      return json.dumps({"quantity":"unknown"})
   
-# def get_current_weather(location, unit="celsius"):
-#     """Get the current weather in a given location"""
-#     if "tokyo" in location.lower():
-#         return json.dumps({"location": "Tokyo", "temperature": "10", "unit": unit})
-#     elif "rome" in location.lower():
-#         return json.dumps({"location": "Rome", "temperature": "72", "unit": unit})
-#     elif "paris" in location.lower():
-#         return json.dumps({"location": "Paris", "temperature": "22", "unit": unit})
-#     else:
-#         return json.dumps({"location": location, "temperature": "unknown"})
+def get_drug_details(drug_name):
+    base_url = "https://api.fda.gov/drug/label.json"
+    api_key = "xS2omrNfbJ0eRJdFCJ0oULCS7hHuCOYjeGqu1yJt"
+    # search_query = f'generic_name:"{drug_name}"'
+    search_query = "Aspirin"
 
-# def get_vacation(user):
-#     """Get vacation days for a user"""
-#     if "john" in user.lower():
-#         return json.dumps({"vacation": "5 days"})
-#     if "mary" in user.lower():
-#         return json.dumps({"vacation": "10 days"})
-#     if "bob" in user.lower():
-#         return json.dumps({"vacation": "20 days"})
-#     else:
-#         return json.dumps({"vacation": "first tell me your name?"})
+    url = f"{base_url}?api_key={api_key}&search={search_query}"
+    response = requests.get(url)
+    print(response.text)
+    if response.status_code == 200:
+      return json.dumps({"Drug details":response})
+    else:
+      return json.dumps({"Drug details":response})
+    
+def get_database_details(prompt):
+    response  = initial_function(prompt)
+    return response
+  
 
 def agent_orchestrator(prompt):
     # Create model instance
     model = genai.GenerativeModel('gemini-1.0-pro')
+    # Check if the query is in memory
+    previous_response = retrieve_memory(prompt)
+    if previous_response:
+        return previous_response
     # safe = [
     #     {
     #         "category": "HARM_CATEGORY_DANGEROUS",
@@ -103,52 +122,20 @@ def agent_orchestrator(prompt):
     tools = [
         {
             "function_declarations": [
-                # {
-                #     "name": "get_current_weather",
-                #     "description": "Get current weather for a city. City name is required",
-                #     "parameters": {
-                #         "type": "object",
-                #         "properties": {
-                #             "location": {
-                #                 "type": "string",
-                #                 "description": "Location",
-                #             },
-                #             "unit": {
-                #                 "type": "string",
-                #                 "enum": ["celsius", "fahrenheit"]
-                #             }
-                #         },
-                #         "required": ["location"]
-                #     }
-                # },
-                # {
-                #     "name": "get_vacation",
-                #     "description": "Get vacation in days for a user. User name is required",
-                #     "parameters": {
-                #         "type": "object",
-                #         "properties": {
-                #             "user": {
-                #                 "type": "string",
-                #                 "description": "name of the user",
-                #             }
-                #         },
-                #         "required": ["user"]
-                #     }
-                # },
-                # {
-                #     "name": "get_patient_info",
-                #     "description": "Get name of the patient. Patient ID is required",
-                #     "parameters": {
-                #         "type": "object",
-                #         "properties": {
-                #             "patient_id": {
-                #                 "type": "string",
-                #                 "description": "ID of the patient",
-                #             }
-                #         },
-                #         "required": ["patient_id"]
-                #     },
-                # },
+                {
+                    "name": "get_patient_info",
+                    "description": "Get name of the patient. Patient ID is required",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "patient_id": {
+                                "type": "string",
+                                "description": "ID of the patient",
+                            }
+                        },
+                        "required": ["patient_id"]
+                    },
+                },
                 {
                     "name": "get_current_stock",
                     "description": "Get current stock of the medicine. Medicine name is required",
@@ -205,19 +192,55 @@ def agent_orchestrator(prompt):
                         "required": ["patient_id"]
                     }
                 },
+                {
+                    "name": "get_drug_details",
+                    "description": "Get details of the drug. Drug name is required",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "drug_name": {
+                                "type": "string",
+                                "description": "Name of the drug",
+                            }
+                        },
+                        "required": ["drug_name"]
+                    },
+                },
+                {
+                    "name": "get_database_details",
+                    "description": "Get details from the database. Prompt is required",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "prompt": {
+                                "type": "string",
+                                "description": "Prompt from the user",
+                            }
+                        },
+                        "required": ["prompt"]
+                    },
+                },
             ]
         }
     ]
     
     available_functions = {
-        # "get_current_weather": get_current_weather,
-        # "get_vacation": get_vacation,
+        "get_patient_info": get_patient_info,
         "get_current_stock": get_current_stock,
         "get_current_medications": get_current_medications,
         "get_allergies": get_allergies,
         "get_complications": get_complications,
-        # "get_patient_info": get_patient_info,
+        "get_drug_details": get_drug_details,
+        "get_database_details": get_database_details,
+        
     }
+
+    # # Initialize LangChain memory for storing the conversation
+    # memory = ConversationBufferMemory(memory_key="messages", return_messages=True)
+
+    # # Check if the query is in memory
+    # if prompt in memory.load_memory_variables({}):
+    #     return memory.load_memory_variables({})[prompt]
     
     # Generate initial response
     response = model.generate_content(
@@ -225,8 +248,9 @@ def agent_orchestrator(prompt):
         tools = tools,
         generation_config=genai.types.GenerationConfig(
             temperature=0.0
-        )
+        ),   
     )
+    print(response)
 
     # Process function calls
     if hasattr(response.candidates[0], 'content') and hasattr(response.candidates[0].content, 'parts'):
@@ -234,26 +258,14 @@ def agent_orchestrator(prompt):
             if hasattr(part, 'function_call'):
                 function_name = part.function_call.name
                 function_args = part.function_call.args
-                if function_args==None:
-                    response = model.generate_content(
-        prompt,
-        )
+
                 if function_name in available_functions:
                     # Execute function and get response
-                    # if function_name == "get_patient_info":
-                    #     function_response = available_functions[function_name](
-                    #         name=function_args["patient_id"]
-                    #     )                  
-                    # if function_name == "get_current_weather":
-                    #     function_response = available_functions[function_name](
-                    #         location=function_args["location"],
-                    #         unit=function_args.get("unit", "celsius")
-                    #     )
-                    # elif function_name == "get_vacation":
-                    #     function_response = available_functions[function_name](
-                    #         user=function_args["user"]
-                    #     )
-                    if function_name == "get_current_stock":
+                    if function_name == "get_patient_info":
+                        function_response = available_functions[function_name](
+                            patient_id=function_args["patient_id"]
+                        )                  
+                    elif function_name == "get_current_stock":
                         function_response = available_functions[function_name](
                             name=function_args["name"]
                         )
@@ -269,10 +281,18 @@ def agent_orchestrator(prompt):
                         function_response = available_functions[function_name](
                             patient_id=function_args["patient_id"]
                         )
-                    # Generate final response using function result
-                    # print(function_response)
+                    elif function_name == "get_drug_details":
+                        function_response = available_functions[function_name](
+                            drug_name=function_args["drug_name"]
+                        )
+                    elif function_name == "get_database_details":
+                        function_response = available_functions[function_name](
+                            prompt=function_args["prompt"]
+                        )
                     final_response = model.generate_content(
-                        [   {"text":""" Return only the complication. Example :  if the function response is {"Complications": "Migraine"} then return just the complication in a proper sentence. Don't explain about it."""},
+                        [  
+                            {"text":""" Return only the complication. Example :  if the function response is {"Complications": "Migraine"} then return just the complication in a proper sentence. Don't explain about it."""},
+                            {"text":"""When the details of a drug is asked, respond with only the important details(dosage, sideffects, interactions, warnings etc.) from the response from the API"""},
                             {"text": prompt},
                             {
                                 "text": f"Function {function_name} returned: {function_response}"
@@ -282,30 +302,83 @@ def agent_orchestrator(prompt):
             temperature=0.0),
                             # safety_settings= safe,
                     )
-                    # print(final_response)
+                    store_memory(prompt, final_response.text)
                     return final_response.text
                 
                 else:
                     final_response = model.generate_content(
                         [
                             {"text": prompt},
-
-                        ]
-                    )
+                        ],  generation_config=genai.types.GenerationConfig(
+                            temperature=0.0
+                            ),
+                )
                     return final_response.text
     
     return response.text
 
+# def main():
+#     print("Welcome to the Gemini Agent. Type 'exit' to quit.")
+#     while True:
+#         user_input = input("[User Prompt]: ")
+#         if user_input.lower() == 'exit':
+#             break
+#         response = agent_orchestrator(user_input)
+#         print(f"[Agent]: {response}")
+
+# if __name__ == "__main__":
+#     main()
+
+# Check the memory here itself..No need to go to the agent
+    
 def main():
-    print("Welcome to the Gemini Agent. Type 'exit' to quit.")
-    while True:
-        user_input = input("[User Prompt]: ")
-        if user_input.lower() == 'exit':
-            break
+    st.set_page_config(page_title="AI Agent", page_icon=":robot:")
+    st.title("AI Agent for Medical Assistance")
+
+    with st.sidebar:
+      st.subheader("Settings")
+    #   st.write("This is a simple chat application using MySQL. Connect to the database and start chatting.")
+    
+      st.text_input("Host", value="localhost", key="Host")
+      st.text_input("Port", value="3306", key="Port")
+      st.text_input("User", value="root", key="User")
+      st.text_input("Password", type="password", value="admin", key="Password")
+      st.text_input("Database", value=" ", key="Database")
+    
+      if st.button("Connect"):
+          with st.spinner("Connecting to database..."):
+            db = init_database(
+                st.session_state["User"],
+                st.session_state["Password"],
+                st.session_state["Host"],
+                st.session_state["Port"],
+                st.session_state["Database"]
+            )
+            st.session_state.db = db
+            st.success("Connected to database!")
+    
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+    
+    user_input = st.chat_input("Ask a question...")
+    if user_input:
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
+            st.markdown(user_input)
         response = agent_orchestrator(user_input)
-        print(f"[Agent]: {response}")
+        
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        with st.chat_message("assistant"):
+            st.markdown(response)
 
 if __name__ == "__main__":
     main()
+
+
+
 
 

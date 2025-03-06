@@ -1,0 +1,101 @@
+Patient_ID,Allergies
+P001,"Penicillin, Peanuts"
+P002,Latex
+P003,"Shellfish, Sulfa Drugs"
+P004,No Known Allergies
+P005,"Bee Stings, Aspirin"
+P006,"Dairy, Eggs"
+P007,Codeine
+P008,"Tree Nuts, Soy"
+P009,Iodine
+P010,"Wheat, Fish"
+P011,No Known Allergies
+P012,"Penicillin, Dust Mites"
+P013,"Mold, Cat Dander"
+P014,Tetracycline
+P015,"Pollen, Dog Dander"
+P016,No Known Allergies
+P017,"Sulfa Drugs, Latex"
+P018,"Sesame, Eggs"
+P019,Morphine
+P020,"Grass, Tree Pollen"
+P021,"Shellfish, Ibuprofen"
+P022,No Known Allergies
+P023,"Peanuts, Tree Nuts"
+P024,"Dust, Mold"
+P025,Amoxicillin
+P026,"Wheat, Soy"
+P027,No Known Allergies
+P028,"Bee Stings, Wasp Stings"
+P029,"Fish, Shellfish"
+P030,Penicillin
+P031,"Ragweed, Pollen"
+P032,No Known Allergies
+P033,"Eggs, Milk"
+P034,Aspirin
+P035,"Latex, Bandage Adhesive"
+P036,No Known Allergies
+P037,"Cat Dander, Dog Dander"
+P038,"Peanuts, Sesame"
+P039,Codeine
+P040,"Sulfa Drugs, Penicillin"
+P041,No Known Allergies
+P042,"Wool, Dust"
+P043,"Soy, Tree Nuts"
+P044,Iodine
+P045,"Bee Stings, Pollen"
+P046,No Known Allergies
+P047,"Fish, Shellfish"
+P048,"Latex, Nickel"
+P049,Amoxicillin
+P050,"Wheat, Gluten"
+P051,No Known Allergies
+P052,"Peanuts, Fish"
+P053,"Mold, Dust Mites"
+P054,Tetracycline
+P055,"Cat Hair, Pollen"
+P056,No Known Allergies
+P057,"Penicillin, Morphine"
+P058,"Eggs, Dairy"
+P059,Ibuprofen
+P060,"Tree Pollen, Grass"
+P061,No Known Allergies
+P062,"Shellfish, Iodine"
+P063,"Peanuts, Soy"
+P064,Sulfa Drugs
+P065,"Dust, Pet Dander"
+P066,No Known Allergies
+P067,"Latex, Penicillin"
+P068,"Tree Nuts, Sesame"
+P069,Aspirin
+P070,"Ragweed, Mold"
+P071,No Known Allergies
+P072,"Fish, Eggs"
+P073,"Bee Venom, Wasp Venom"
+P074,Codeine
+P075,"Wheat, Dairy"
+P076,No Known Allergies
+P077,"Pollen, Dust"
+P078,"Penicillin, Tetracycline"
+P079,Latex
+P080,"Peanuts, Tree Nuts"
+P081,No Known Allergies
+P082,"Shellfish, Fish"
+P083,"Cat Dander, Dust Mites"
+P084,Morphine
+P085,"Soy, Eggs"
+P086,No Known Allergies
+P087,"Sulfa Drugs, Iodine"
+P088,"Wheat, Gluten"
+P089,Amoxicillin
+P090,"Pollen, Grass"
+P091,No Known Allergies
+P092,"Bee Stings, Latex"
+P093,"Peanuts, Fish"
+P094,Penicillin
+P095,"Mold, Dust"
+P096,No Known Allergies
+P097,"Tree Nuts, Sesame"
+P098,"Dog Dander, Cat Dander"
+P099,Aspirin
+P100,"Dairy, Eggs"

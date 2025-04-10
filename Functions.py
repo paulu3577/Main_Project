@@ -4,7 +4,7 @@ import requests
 
 def get_patient_info(patient_id):
     df = pd.read_csv("patient_info.csv",dtype={"Patient_ID": str})
-    # print(df)
+    print(df)
     if patient_id in df["Patient_ID"].values:
       name = df.loc[df["Patient_ID"] == patient_id, "Patient Name"].values[0]
       return json.dumps({"Patient name":name})
@@ -22,7 +22,7 @@ def get_current_medications(patient_id):
 
 def get_allergies(patient_id):
     df = pd.read_csv("allergies.csv")
-    # print(df)
+    print(df)
     if patient_id in df["Patient_ID"].values:
      allergy = df.loc[df["Patient_ID"] == patient_id, "Allergies"].values[0]
      return json.dumps({"Allergies":allergy})
@@ -31,7 +31,7 @@ def get_allergies(patient_id):
     
 def get_complications(patient_id):
     df = pd.read_csv("complications.csv")
-    # print(df)
+    print(df)
     if patient_id in df["Patient_ID"].values:
      complication = df.loc[df["Patient_ID"] == patient_id, "Complications"].values[0] 
      return json.dumps({"Complications":complication})
@@ -46,6 +46,8 @@ def get_current_stock(name):
       return json.dumps({"quantity":quantity})
     else:
       return json.dumps({"quantity":"unknown"})
+    
+
   
 # def get_drug_details(drug_name):
 #     base_url = "https://api.fda.gov/drug/label.json"
